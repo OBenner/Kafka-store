@@ -1,0 +1,56 @@
+spring.cloud.stream.bindings.one:
+  destination: onetopic #topic input name
+  consumer:
+    useNativeDecoding: true
+    keySerde: org.apache.kafka.common.serialization.Serdes$LongSerde
+    valueSerde: org.apache.kafka.common.serialization.Serdes$StringSerde
+
+spring.cloud.stream.bindings.two:
+  destination: twotopic  #topic read store
+  consumer:
+    useNativeDecoding: true
+    keySerde: org.apache.kafka.common.serialization.Serdes$LongSerde
+    valueSerde: org.apache.kafka.common.serialization.Serdes$StringSerde
+  producer:
+    keySerde: org.apache.kafka.common.serialization.Serdes$LongSerde
+    valueSerde: org.apache.kafka.common.serialization.Serdes$StringSerde
+
+spring.cloud.stream.bindings.error:
+  destination: errortopic
+  producer:
+    useNativeDecoding: true
+
+
+
+spring.cloud.stream.kafka.streams.binder:
+  brokers: localhost  # kafka address
+  configuration:
+    header-mode: raw
+    default.key.serde: org.apache.kafka.common.serialization.Serdes$LongSerde
+    default.value.serde: org.apache.kafka.common.serialization.Serdes$StringSerde
+#spring.cloud.stream.kafka.streams.binder.autoAddPartitions: true
+#spring.cloud.stream.kafka.streams.binder.minPartitionCount: 6
+spring.cloud.stream.kafka.streams.binder.configuration.application.server: localhost:8080 # address application send to kafka (manage instances)
+spring.applicaiton.name: store
+spring:
+  cloud:
+    stream:
+      kafka:
+        streams:
+          binder:
+            consumer-properties:
+              application-id: store
+  kafka:
+    consumer:
+      auto-offset-reset: earliest
+#    streams:
+#      state-dir: E:\kafka_2.12-2.1.0\state
+#      cache-max-size-buffering:
+
+
+spring.cloud.stream.kafka.streams.binder.serdeError: logAndContinue  # error handler
+server:
+  port: 8080
+
+store:
+ name: store
