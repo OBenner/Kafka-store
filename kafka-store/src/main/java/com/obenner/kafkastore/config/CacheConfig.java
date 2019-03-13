@@ -44,7 +44,7 @@ public class CacheConfig {
                 null,
                 null,
                 null,
-                Stream.of(new StringVendorExtension("Company", "Neoflex")).collect(Collectors.toList())
+                Stream.of(new StringVendorExtension("Company", "")).collect(Collectors.toList())
         );
     }
 
